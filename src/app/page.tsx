@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div>자동배포1</div>;
+  return <div>자동배포2</div>;
 }
