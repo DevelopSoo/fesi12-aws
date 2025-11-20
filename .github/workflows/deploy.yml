@@ -1,0 +1,25 @@
+name: EC2 자동 배포하기
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH로 EC2에 원격으로 접속한 후 배포한다.
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PEM_KEY }}
+          script: |
+            set -e
+            cd /home/ubuntu/fesi12-aws
+            git pull origin main
+            pm2 kill
+            npm ci
+            npm run build
+            pm2 start npm --name "nextjs-app" -- start
