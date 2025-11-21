@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div>codedeploy 배포</div>;
+  return <div>docker 배포</div>;
 }
